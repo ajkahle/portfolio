@@ -108,10 +108,10 @@ module.exports = {
       }
     ]
   },
-  output:{
-    filename:'transformed.js',
-    path: __dirname + '/build',
-    publicPath: '/'
+  output: {
+    path: __dirname,
+    publicPath: '/',
+    filename: 'bundle.js'
   },
   devServer: {
     historyApiFallback: true,

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/webpack/bin/webpack.js -p --progress && node index.js",
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "prod": "NODE_ENV=production node server.js",
+    "postinstall": "webpack -p",
     "dev": "webpack-dev-server",
     "build": "webpack",
     "deploy": "firebase deploy --only functions",
