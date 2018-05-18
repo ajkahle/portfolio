@@ -32,6 +32,38 @@
   position: absolute !important;
   bottom: 0%;
   width: 100%; }
+.about__avatar___1_Qaj {
+  width: 80% !important;
+  height: 80% !important; }
+.contact__gridContainer___3TliI {
+  position: absolute;
+  top: 25%; }
+
+.contact__icons___NL2m5 {
+  margin: auto;
+  display: block;
+  color: #0d47a1; }
+
+.contact__icons___NL2m5:hover {
+  cursor: pointer;
+  color: #00c853; }
+.examples__cardContent___3rn1V {
+  color: white !important;
+  text-align: center;
+  height: 200px; }
+
+.examples__cardContentContent___33NSP {
+  color: white !important; }
+
+.examples__linkIcon___B0AWv {
+  margin: auto;
+  display: block; }
+
+.examples__cardLinks___1SPin {
+  text-align: center; }
+
+.examples__cardLinks___1SPin:hover {
+  color: #0d47a1; }
 .loading__flex___jiIn8, .loading__flex-column___2Yc0J, .loading__flex-column-center___-Af8Z, .loading__progress___GdIhL, .loading__flex-row___3F26G, .loading__flex-row-center___1SJb7 {
   display: flex;
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
