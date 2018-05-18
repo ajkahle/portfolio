@@ -6,7 +6,7 @@
   "scripts": {
     "test": "webpack-dev-server",
     "build": "webpack",
-    "start": "node index.js",
+    "start": "webpack-dev-server",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
