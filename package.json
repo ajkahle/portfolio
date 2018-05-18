@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
+    "start": "node index.js",
     "test": "webpack-dev-server",
-    "build": "webpack",
-    "start": "npm run build && node index.js",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
