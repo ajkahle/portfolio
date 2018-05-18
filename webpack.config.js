@@ -109,9 +109,9 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname+'/build',
-    publicPath: './',
-    filename: 'bundle.js'
+      path: path.resolve(__dirname, 'public'),
+      filename: 'bundle.js',
+      publicPath: '/public/',
   },
   devServer: {
     historyApiFallback: true,
