@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "prod": "NODE_ENV=production node server.js",
+    "prod": "NODE_ENV=production node index.js",
     "postinstall": "webpack -p",
     "dev": "webpack-dev-server",
     "build": "webpack",
