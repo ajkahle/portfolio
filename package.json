@@ -10,7 +10,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
-    "engines": {
+  "engines": {
     "node": "6.x"
   },
   "repository": {
@@ -25,15 +25,16 @@
     "@devexpress/dx-react-grid": "^1.1.2",
     "@devexpress/dx-react-grid-material-ui": "^1.1.2",
     "@material-ui/core": "^1.0.0-rc.1",
+    "d3-array": "*",
+    "d3-axis": "*",
+    "d3-brush": "*",
+    "d3-geo": "*",
     "d3-scale": "^2.0.0",
+    "d3-selection": "*",
     "d3-shape": "^1.2.0",
-    "d3-svg-legend":"*",
-    "d3-array":"*",
-    "d3-geo":"*",
-    "d3-selection":"*",
-    "d3-transition":"*",
-    "d3-brush":"*",
-    "d3-axis":"*",
+    "d3-svg-legend": "*",
+    "d3-transition": "*",
+    "express": "^4.16.3",
     "firebase": "^4.12.1",
     "jquery": "^3.3.1",
     "normalize.css": "^8.0.0",
