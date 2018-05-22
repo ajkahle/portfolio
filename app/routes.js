@@ -8,8 +8,10 @@ import { configureStore } from './store/store';
 import Header from "./components/header/header";
 import Home from "./routes/home/home";
 import About from "./routes/about/about";
+import Skills from "./routes/skills/skills";
 import Contact from "./routes/contact/contact";
 import Examples from "./routes/examples/examples";
+import Map from "./routes/examples/examples/map/map";
 import Loading from './routes/loading';
 import classes from './stylesheets/default.scss';
 import Favicon from 'react-favicon';
@@ -30,8 +32,10 @@ export const makeMainRoutes = () => {
               <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/about" component={About}/>
+                <Route exact path="/skills" component={Skills}/>
                 <Route exact path="/contact" component={Contact}/>
                 <Route exact path="/examples" component={Examples}/>
+                <Route exact path="/examples/map" component={Map}/>
               </Switch>
             </div>
           </div>
