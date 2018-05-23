@@ -35,7 +35,7 @@ export const makeMainRoutes = () => {
                 <Route exact path="/skills" component={Skills}/>
                 <Route exact path="/contact" component={Contact}/>
                 <Route exact path="/examples" component={Examples}/>
-                <Route exact path="/examples/map" component={Map}/>
+                <Route exact path="/map" component={Map}/>
               </Switch>
             </div>
           </div>
