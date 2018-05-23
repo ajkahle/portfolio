@@ -26,7 +26,7 @@ import classes from './map.scss';
 import { scaleLinear,scaleOrdinal } from 'd3-scale';
 import { min,max } from 'd3-array';
 import { select,event } from 'd3-selection';
-import { geoAlbers, geoPath } from 'd3-geo'
+import { geoAlbersUsa, geoPath } from 'd3-geo'
 import { pie,arc } from 'd3-shape';
 import Drawer from '@material-ui/core/Drawer';
 import shapefile from '../../../../election_results.json'
@@ -162,8 +162,10 @@ class Map extends React.Component {
     this.updateMap()
   }
   createMap(){
+    console.log(this.props.containerWidth)
     const node = this.node
-    const projection = geoAlbers()
+    const containerWidth = this.props.containerWidth
+    const projection = geoAlbersUsa().scale(Math.min(containerWidth,1000))
     const pathGenerator = geoPath().projection(projection)
     const mapDisplay = this.props.mapDisplay
     const hover = this.props.hover
@@ -194,7 +196,8 @@ class Map extends React.Component {
   }
   updateMap(){
     const node = this.node
-    const projection = geoAlbers()
+    const containerWidth = this.props.containerWidth
+    const projection = geoAlbersUsa().scale(Math.min(containerWidth,1000))
     const pathGenerator = geoPath().projection(projection)
     const mapDisplay = this.props.mapDisplay
     const colorScale = scaleLinear()
@@ -208,7 +211,7 @@ class Map extends React.Component {
 
   render() {
         return <svg ref={node => this.node = node}
-        width={1000} height={500}>
+        width={this.props.containerWidth} height={Math.min(this.props.containerWidth*.6,500)}>
         </svg>
      }
 }
@@ -276,12 +279,60 @@ class MapExample extends React.Component {
           </Grid>
           <Tooltip data={this.state.hover} display={this.state.hoverShow}/>
           <Drawer className={classes.drawer} anchor="right" open={this.state.drawer} onClose={toggleDrawer()}>
-            <StateDetail state={this.state.state}/>
+            <StateDetail containerWidth={this.props.containerWidth} state={this.state.state}/>
           </Drawer>
-        <Map mapDisplay={state.mapDisplay} handleClick={this.handleClick} hover={this.hover} hoverOff={this.hoverOff}/>
+        <Map containerWidth={this.props.containerWidth} mapDisplay={state.mapDisplay} handleClick={this.handleClick} hover={this.hover} hoverOff={this.hoverOff}/>
         </Grid>
       </Fade>
     )
+  }
+}
+
+class MapHOC extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+        containerWidth: null,
+      }
+
+      this.fitParentContainer = this.fitParentContainer.bind(this)
+  }
+  componentDidMount() {
+    this.fitParentContainer()
+    window.addEventListener('resize', this.fitParentContainer)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.fitParentContainer)
+  }
+
+  fitParentContainer() {
+
+      const { containerWidth } = this.state
+      const currentContainerWidth = this.node.getBoundingClientRect().width
+
+      const shouldResize = containerWidth !== currentContainerWidth
+
+      if (shouldResize) {
+        this.setState({
+          containerWidth: currentContainerWidth,
+        })
+      }
+    }
+
+  render(){
+    const { containerWidth } = this.state
+    const shouldRenderChart = containerWidth !== null
+
+    console.log(shouldRenderChart)
+
+    return <div
+      ref={node => this.node = node}
+    >
+      {(shouldRenderChart && <MapExample {...this.props} containerWidth={containerWidth} />)}
+    </div>
+
+
   }
 }
 
@@ -319,4 +370,4 @@ const enhance = compose(
   })
 )
 
-export default (withRoot(enhance(MapExample)))
+export default (withRoot(enhance(MapHOC)))
