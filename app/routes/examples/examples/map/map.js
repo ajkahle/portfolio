@@ -165,7 +165,7 @@ class Map extends React.Component {
     console.log(this.props.containerWidth)
     const node = this.node
     const containerWidth = this.props.containerWidth
-    const projection = geoAlbersUsa().scale(Math.min(containerWidth,1000))
+    const projection = geoAlbersUsa().scale(Math.min(containerWidth,1000)).translate([containerWidth / 2, Math.min(this.props.containerWidth*.6,500) / 2]);
     const pathGenerator = geoPath().projection(projection)
     const mapDisplay = this.props.mapDisplay
     const hover = this.props.hover
@@ -197,13 +197,14 @@ class Map extends React.Component {
   updateMap(){
     const node = this.node
     const containerWidth = this.props.containerWidth
-    const projection = geoAlbersUsa().scale(Math.min(containerWidth,1000))
+    const projection = geoAlbersUsa().scale(Math.min(containerWidth,1000)).translate([containerWidth / 2, Math.min(this.props.containerWidth*.6,500) / 2]);
     const pathGenerator = geoPath().projection(projection)
     const mapDisplay = this.props.mapDisplay
     const colorScale = scaleLinear()
       .domain(domain[mapDisplay]).range(colors[mapDisplay])
 
     select(node).selectAll("path")
+      .attr("d",pathGenerator)
     .attr("fill",function(d){
       return colorScale(parseFloat(d.properties[mapDisplay]))
     })
@@ -281,7 +282,42 @@ class MapExample extends React.Component {
           <Drawer className={classes.drawer} anchor="right" open={this.state.drawer} onClose={toggleDrawer()}>
             <StateDetail containerWidth={this.props.containerWidth} state={this.state.state}/>
           </Drawer>
-        <Map containerWidth={this.props.containerWidth} mapDisplay={state.mapDisplay} handleClick={this.handleClick} hover={this.hover} hoverOff={this.hoverOff}/>
+          <Grid container>
+            <Grid item md={8}>
+              <Map containerWidth={this.props.containerWidth} mapDisplay={state.mapDisplay} handleClick={this.handleClick} hover={this.hover} hoverOff={this.hoverOff}/>
+            </Grid>
+            <Grid item md={4}>
+              <ul>
+                <li>
+                  <Typography variant="body2" gutterBottom>
+                    Hover over states to see more detail, click on a state to open a new window with details and more visualizations. The radio buttons at the top change the shading of the map.
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="body2" gutterBottom>
+                    Data was collected from <a href="https://www.census.gov/geo/maps-data/data/tiger-line.html">the Census</a>, <a href="http://www.electproject.org/">US Elections Project</a>, and <a href="https://en.wikipedia.org/wiki/United_States_presidential_election,_2016#Results_by_state">Wikipedia</a>.
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="body2" gutterBottom>
+                    Using the PostGIS package in PostgreSQL, data was joined to the shapefiles from the Census to create the map. The geographies were simplified to reduce the size and optimize for performance and saved as a GeoJSON file.
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="body2" gutterBottom>
+                    This visualization combines React and d3 to create the map. React handles the rendering and updating, d3 handles the map building.
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="body2" gutterBottom>
+                    This same type of visualization can be built for any geography level (county, city, legislative district) to display any data (election results, demographics, economic data, etc).
+                  </Typography>
+                </li>
+              </ul>
+            </Grid>
+          </Grid>
+
+
         </Grid>
       </Fade>
     )
@@ -324,12 +360,10 @@ class MapHOC extends React.Component {
     const { containerWidth } = this.state
     const shouldRenderChart = containerWidth !== null
 
-    console.log(shouldRenderChart)
-
     return <div
       ref={node => this.node = node}
     >
-      {(shouldRenderChart && <MapExample {...this.props} containerWidth={containerWidth} />)}
+      {(shouldRenderChart && <MapExample {...this.props} containerWidth={containerWidth*.75} />)}
     </div>
 
 
