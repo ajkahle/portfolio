@@ -50,7 +50,8 @@
     "redux": "^4.0.0",
     "redux-auth-wrapper": "^2.0.2",
     "redux-firestore": "^0.4.1",
-    "scss-base": "^1.4.0"
+    "scss-base": "^1.4.0",
+    "webpack": "^3.0.0",
   },
   "devDependencies": {
     "autoprefixer": "^8.3.0",
