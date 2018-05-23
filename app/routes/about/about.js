@@ -36,7 +36,7 @@ class About extends React.Component {
         <Grid container>
           <Grid item md={4}>
             <Typography variant="display2" color="primary" gutterBottom>
-            Test Test Test
+            {content.heading1}
             </Typography>
             <Avatar src={Profile} className={classes.avatar}/>
           </Grid>
