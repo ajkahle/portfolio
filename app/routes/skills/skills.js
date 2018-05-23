@@ -19,6 +19,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 import Drawer from '@material-ui/core/Drawer';
 import {withRoot} from '../../stylesheets/theme';
+import { fadeTime } from '../../constants'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withHandlers, lifecycle, withStateHandlers } from 'recompose';
@@ -88,7 +89,7 @@ class Skills extends React.Component {
       content = this.props.skills.skills.content
     }
     return (
-      <Fade in={fade} timeout={{enter:5000,exit:3000}}>
+      <Fade in={fade} timeout={fadeTime}>
       <div>
       <Drawer className={classes.drawer} anchor="right" open={this.state.drawer} onClose={toggleDrawer(this.state.skill,this.state.color)}>
         <div className={classes.drawerHeader}>

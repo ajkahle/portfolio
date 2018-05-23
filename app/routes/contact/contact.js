@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
 import Card, { CardHeader, CardContent, CardActions } from '@material-ui/core/Paper';
 import {withRoot} from '../../stylesheets/theme'
+import { fadeTime } from '../../constants'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withHandlers, lifecycle, withStateHandlers } from 'recompose';
@@ -31,7 +32,7 @@ class Contact extends React.Component {
       content = this.props.contact.contact.content
     }
     return (
-      <Fade in={fade} timeout={{enter:5000,exit:3000}}>
+      <Fade in={fade} timeout={fadeTime}>
       <div>
         <Typography variant="display2" color="primary">
         {content.heading1}

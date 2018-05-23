@@ -13,6 +13,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Divider from '@material-ui/core/Divider';
 import {withRoot} from '../../../../stylesheets/theme'
+import { fadeTime } from '../../../../constants'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withHandlers, lifecycle, withStateHandlers } from 'recompose';
@@ -162,7 +163,6 @@ class Map extends React.Component {
     this.updateMap()
   }
   createMap(){
-    console.log(this.props.containerWidth)
     const node = this.node
     const containerWidth = this.props.containerWidth
     const projection = geoAlbersUsa().scale(Math.min(containerWidth,1000)).translate([containerWidth / 2, Math.min(this.props.containerWidth*.6,500) / 2]);
@@ -256,7 +256,7 @@ class MapExample extends React.Component {
       content = this.props.examples.examples.content
     }
     return (
-      <Fade in={fade} timeout={{enter:5000,exit:3000}}>
+      <Fade in={fade} timeout={fadeTime}>
       <Grid container>
           <Grid item xs={4}>
             <Typography variant="display2" color="primary">

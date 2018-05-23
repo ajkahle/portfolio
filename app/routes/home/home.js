@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import {withRoot} from '../../stylesheets/theme'
+import { fadeTime } from '../../constants'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withHandlers, lifecycle, withStateHandlers } from 'recompose';
@@ -29,7 +30,7 @@ class Home extends React.Component {
       content = this.props.home.home.content
     }
     return (
-      <Fade in={true} timeout={{enter:5000,exit:3000}}>
+      <Fade in={true} timeout={fadeTime}>
         <div>
           <Typography variant="display4" color="primary">
           {content.heading1}

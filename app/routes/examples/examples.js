@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
 import {withRoot} from '../../stylesheets/theme'
+import { fadeTime } from '../../constants'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withHandlers, lifecycle, withStateHandlers } from 'recompose';
@@ -18,6 +19,7 @@ import Grid from '@material-ui/core/Grid';
 import * as FontAwesome from 'react-icons/lib/fa'
 import {MdWeb} from 'react-icons/lib/md'
 import classes from './examples.scss';
+
 
 const colors = ['#0d47a1','#00c853','#ff4081','#fbc02d','#0d47a1','#00c853','#673ab7']
 //const colors = ['#0d47a1','#00c853','#0d47a1','#ff4081','#00c853','#0d47a1','#ff4081']
@@ -38,7 +40,7 @@ class Examples extends React.Component {
       content = this.props.examples.examples.content
     }
     return (
-      <Fade in={fade} timeout={{enter:5000,exit:3000}}>
+      <Fade in={fade} timeout={fadeTime}>
       <div>
         <Typography variant="display2" color="primary">
         {content.heading1}

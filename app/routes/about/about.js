@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import {withRoot} from '../../stylesheets/theme'
+import { fadeTime } from '../../constants'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withHandlers, lifecycle, withStateHandlers } from 'recompose';
@@ -32,7 +33,7 @@ class About extends React.Component {
       content = this.props.about.about.content
     }
     return (
-      <Fade in={fade} timeout={{enter:5000,exit:3000}}>
+      <Fade in={fade} timeout={fadeTime}>
         <Grid container>
           <Grid item md={4}>
             <Typography variant="display2" color="primary" gutterBottom>
