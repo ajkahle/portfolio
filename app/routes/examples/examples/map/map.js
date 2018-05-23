@@ -23,17 +23,29 @@ import Grid from '@material-ui/core/Grid';
 import * as FontAwesome from 'react-icons/lib/fa'
 import {MdWeb} from 'react-icons/lib/md'
 import classes from './map.scss';
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear,scaleOrdinal } from 'd3-scale';
 import { min,max } from 'd3-array';
-import { select } from 'd3-selection';
+import { select,event } from 'd3-selection';
 import { geoAlbers, geoPath } from 'd3-geo'
+import { pie,arc } from 'd3-shape';
+import Drawer from '@material-ui/core/Drawer';
 import shapefile from '../../../../election_results.json'
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function numberToPercent(x) {
+  return (x*100).toFixed(1).toString() + '%'
+}
 
 const colors = {
   clinton_perc:["#d50000","white","#0d47a1"],
   vep_turnout:["#fafafa","#00c853"],
   ec:["#d50000","#0d47a1"]
 }
+
+const pieColors = scaleOrdinal().domain(["trump_perc","clinton_perc","other"]).range(["#d50000","#0d47a1","#00c853"])
 
 const domain = {
   clinton_perc:[min(shapefile.features,function(d){return parseFloat(d.properties.clinton_perc)}),
@@ -50,9 +62,88 @@ class Tooltip extends React.Component {
     super(props)
   }
   render(){
-    <div className={classes.tooltip}>
-      {this.props.content}
-    </div>
+    return (this.props.display && <div className={classes.tooltip} style={{left:this.props.data.event.clientX+20,top:this.props.data.event.clientY-15}}>
+      <Typography variant="title" color="primary">
+        {this.props.data.data.name}
+      </Typography>
+      <Typography variant="body2" style={{color:colors.ec[this.props.data.data.ec]}}>
+        {this.props.data.data.winner} Win
+      </Typography>
+      <Typography variant="body2">
+        <strong>Electoral Votes: </strong>
+        {this.props.data.data.electoral_votes}
+      </Typography>
+      <Typography variant="body2">
+        <strong>Total 2016 Votes: </strong>
+        {numberWithCommas(this.props.data.data.votes)}
+      </Typography>
+    </div>)
+  }
+}
+
+class PieChart extends React.Component {
+  constructor(props){
+    super(props)
+    this.createChart = this.createChart.bind(this)
+  }
+  createChart(){
+    const node = this.node
+    const arcCalc = arc().outerRadius(80).innerRadius(50)
+    const pieCalc = pie().value(function(d){return d.value})
+    const data = this.props.data
+
+    const pieArc = select(node)
+      .append("g")
+      .attr("transform",function(d,i){
+        return "translate("+100+","+100+")"
+      })
+      .selectAll(".arc")
+        .data(pieCalc(data))
+        .enter().append("g")
+          .attr("class","arc")
+
+    pieArc.append("path")
+      .style("fill",function(d){
+        return pieColors(d.data.name)
+      })
+      .attr("d",arcCalc)
+  }
+  componentDidMount(){
+    this.createChart()
+  }
+  componentDidUpdate(){
+    this.createChart()
+  }
+  render() {
+        return <svg ref={node => this.node = node}
+        width={200} height={200}>
+        </svg>
+     }
+}
+
+class StateDetail extends React.Component {
+  constructor(props){
+    super(props)
+  }
+  render(){
+    var state = this.props.state
+    return (
+      <div>
+        <div className={classes.drawerHeader}>
+          <Typography variant="display1" color="primary">
+            {state.name}
+          </Typography>
+        </div>
+        <Divider color="primary"/>
+        <div className={classes.drawerContent}>
+          <Typography variant="title" gutterBottom>2016 Turnout Data</Typography>
+            <Typography variant="body2" gutterBottom><strong>2016 Voting Eligible Population: </strong>{numberWithCommas(state.vep)}</Typography>
+            <Typography variant="body2" gutterBottom><strong>2016 Total Votes: </strong>{numberWithCommas(state.votes)}</Typography>
+            <Typography variant="body2" gutterBottom><strong>2016 Turnout %: </strong>{numberToPercent(state.vep_turnout)}</Typography>
+          <Typography variant="title" gutterBottom>2016 Presidential Election Results</Typography>
+            <PieChart data={[{name:"Clinton",value:state.clinton_perc},{name:"Trump",value:state.trump_perc},{name:"Other",value:(1-state.clinton_perc-state.trump_perc)}]}/>
+        </div>
+    </div>)
   }
 }
 
@@ -60,6 +151,9 @@ class Map extends React.Component {
   constructor(props){
     super(props)
     this.createMap = this.createMap.bind(this)
+  }
+  handleClick = event => {
+    this.props.handleClick(event)
   }
   componentDidMount(){
     this.createMap()
@@ -72,23 +166,30 @@ class Map extends React.Component {
     const projection = geoAlbers()
     const pathGenerator = geoPath().projection(projection)
     const mapDisplay = this.props.mapDisplay
+    const hover = this.props.hover
+    const hoverOff = this.props.hoverOff
+    const handleClick = this.handleClick
     const colorScale = scaleLinear()
       .domain(domain[mapDisplay]).range(colors[mapDisplay])
-
 
     select(node)
       .selectAll("path")
         .data(shapefile.features)
         .enter().append("path")
           .attr("d",pathGenerator)
-          .attr("class","shape")
+          .attr("class",classes.path)
           .attr("stroke","black")
           .attr("fill",function(d){
             return colorScale(parseFloat(d.properties[mapDisplay]))
           })
           .on("mousemove",function(d){
-            
-
+            hover({data:d.properties,event:event})
+          })
+          .on("mouseout",function(d){
+            hoverOff()
+          })
+          .on("click",function(d){
+            handleClick(d.properties)
           })
   }
   updateMap(){
@@ -116,11 +217,26 @@ class MapExample extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      mapDisplay:"clinton_perc"
+      mapDisplay:"clinton_perc",
+      drawer:false,
+      state:{},
+      hoverShow:false
     }
   }
   handleChange = event => {
     this.setState({mapDisplay:event.target.value})
+  }
+  handleClick = event => {
+    this.setState({state:event,drawer:true})
+  }
+  toggleDrawer = () => () => {
+    this.setState({drawer:!this.state.drawer})
+  }
+  hover = event => {
+    this.setState({hover:event,hoverShow:true})
+  }
+  hoverOff = () => {
+    this.setState({hoverShow:false})
   }
   render(){
     var content = {
@@ -129,7 +245,8 @@ class MapExample extends React.Component {
       cards:[{width:false,icon:"FaBeer",link:"/",name:"",dek:""}]
     },
     fade = false,
-    state = this.state
+    state = this.state,
+    toggleDrawer = this.toggleDrawer
     if(this.props.examples){
       fade = true
       content = this.props.examples.examples.content
@@ -139,7 +256,7 @@ class MapExample extends React.Component {
       <Grid container>
           <Grid item xs={4}>
             <Typography variant="display2" color="primary">
-            {content.heading1}
+            Map Example
             </Typography>
           </Grid>
           <Grid item xs={8}>
@@ -154,10 +271,14 @@ class MapExample extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="subheading" gutterBottom>
-            {content.subheading}
+            2016 Election Results and Turnout Data
             </Typography>
           </Grid>
-        <Map mapDisplay={state.mapDisplay}/>
+          <Tooltip data={this.state.hover} display={this.state.hoverShow}/>
+          <Drawer className={classes.drawer} anchor="right" open={this.state.drawer} onClose={toggleDrawer()}>
+            <StateDetail state={this.state.state}/>
+          </Drawer>
+        <Map mapDisplay={state.mapDisplay} handleClick={this.handleClick} hover={this.hover} hoverOff={this.hoverOff}/>
         </Grid>
       </Fade>
     )

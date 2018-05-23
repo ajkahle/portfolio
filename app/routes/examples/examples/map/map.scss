@@ -1,7 +1,21 @@
-.radioRow{
-
+.path{
+  cursor: pointer;
 }
 
-.radio{
-  
+.drawerHeader{
+  width:400px;
+  margin:20px;
+}
+
+.drawerContent{
+  width:400px;
+  margin-left: 40px;
+  margin-top:10px;
+}
+
+.tooltip{
+  position: fixed;
+  padding: 0 10px;
+  background: white;
+  box-shadow: 3px 3px 3px black;
 }
