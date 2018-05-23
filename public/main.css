@@ -35,6 +35,36 @@
 .about__avatar___1_Qaj {
   width: 80% !important;
   height: 80% !important; }
+.skills__formControl___3zHhX {
+  width: 200px; }
+
+.skills__card___EfLe2:hover {
+  cursor: pointer; }
+
+.skills__cardHeader___JJu1s {
+  text-align: center;
+  color: white !important; }
+
+.skills__cardContent___1rkNr {
+  text-align: center;
+  height: 80px; }
+
+.skills__chip___3Krq0 {
+  font-size: .6rem !important;
+  margin: 3px;
+  padding: 12px 0px !important;
+  height: 28px !important; }
+
+.skills__drawerHeader___2dBr_ {
+  width: 400px;
+  margin: 20px; }
+
+.skills__drawerContent___2PytF {
+  width: 400px; }
+
+.skills__skillInfo___s4BO7 {
+  margin-left: 40px;
+  margin-top: 10px; }
 .contact__gridContainer___3TliI {
   position: absolute;
   top: 25%; }
@@ -64,6 +94,23 @@
 
 .examples__cardLinks___1SPin:hover {
   color: #0d47a1; }
+.map__path___14k0H {
+  cursor: pointer; }
+
+.map__drawerHeader___aA7O8 {
+  width: 400px;
+  margin: 20px; }
+
+.map__drawerContent___2FmCS {
+  width: 400px;
+  margin-left: 40px;
+  margin-top: 10px; }
+
+.map__tooltip___2OP5M {
+  position: fixed;
+  padding: 0 10px;
+  background: white;
+  box-shadow: 3px 3px 3px black; }
 .loading__flex___jiIn8, .loading__flex-column___2Yc0J, .loading__flex-column-center___-Af8Z, .loading__progress___GdIhL, .loading__flex-row___3F26G, .loading__flex-row-center___1SJb7 {
   display: flex;
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
