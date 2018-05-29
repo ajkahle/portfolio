@@ -31,7 +31,8 @@ import * as FontAwesome from 'react-icons/lib/fa'
 import {MdWeb} from 'react-icons/lib/md'
 import classes from './skills.scss';
 
-const colors = ['#0d47a1','#00c853','#ff4081','#fbc02d','#0d47a1','#00c853','#673ab7']
+const colors = ['#0d47a1','#00c853','#ff4081','#fbc02d','#0d47a1','#00c853','#673ab7'];
+const cardWidth = 3;
 //const colors = ['#0d47a1','#00c853','#0d47a1','#ff4081','#00c853','#0d47a1','#ff4081']
 
 const intersects = function(a, b) {
@@ -84,6 +85,10 @@ class Skills extends React.Component {
     skill = this.state.skill,
     color = this.state.color;
 
+    if(!skill.examples){
+      skill.examples = []
+    }
+
     if(this.props.skills){
       fade = true
       content = this.props.skills.skills.content
@@ -114,25 +119,27 @@ class Skills extends React.Component {
             </div>
           })}
           </ul>
-          <div className={classes.skillInfo}>
-            <Typography variant="title" gutterBottom>Relevant Examples</Typography>
-            <ul>
-              {skill.examples.map(function(example,i){
-                return <div key={i}>
-                  <li className={classes.listItem}>
-                    <a href={example.link}>
-                      <Typography variant="body2" key={i} gutterBottom style={{color:color}}>
-                        <strong>{example.name}</strong>
+          {(skill.examples.length>0) &&
+            <div className={classes.skillInfo}>
+              <Typography variant="title" gutterBottom>Relevant Examples</Typography>
+              <ul>
+                {skill.examples.map(function(example,i){
+                  return <div key={i}>
+                    <li className={classes.listItem}>
+                      <a href={example.link}>
+                        <Typography variant="body2" key={i} gutterBottom style={{color:color}}>
+                          <strong>{example.name}</strong>
+                        </Typography>
+                      </a>
+                      <Typography variant="body2" key={i} gutterBottom>
+                        {example.text}
                       </Typography>
-                    </a>
-                    <Typography variant="body2" key={i} gutterBottom>
-                      {example.text}
-                    </Typography>
-                  </li>
-                </div>
-              })}
-            </ul>
-          </div>
+                    </li>
+                  </div>
+                })}
+              </ul>
+            </div>
+          }
         </div>
       </Drawer>
       <Grid container>
@@ -167,13 +174,13 @@ class Skills extends React.Component {
         </Grid>
         <Grid item xs={12}>
           <Grid container className={classes.gridContainer} spacing={40}>
-            {content.cards.map(function(d,i){
+            {content.cards.sort(function(a,b){return a.name>b.name}).map(function(d,i){
               var hidden = "none";
               if(intersects(d.tags,tags).length>0){
                 hidden = "block"
               }
               return <Fade in={fade} timeout={{enter:2000,exit:2000}} key={i}>
-              <Grid item md={d.width} key={i} style={{display:hidden}} onClick={toggleDrawer(d,colors[i])}>
+              <Grid item md={cardWidth} key={i} style={{display:hidden}} onClick={toggleDrawer(d,colors[i])}>
                 <Card className={classes.card}>
                   <CardContent style={{backgroundColor:colors[i]}}>
                     <Typography variant="title" className={classes.cardHeader}>
