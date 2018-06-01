@@ -42,7 +42,7 @@ class Contact extends React.Component {
         </Typography>
         <Grid container className={classes.gridContainer}>
           {content.cards.map(function(d,i){
-            return <Grid item md={d.width} key={i}>
+            return <Grid item xs={d.width} key={i}>
               <a href={d.link} target="_blank">
               {React.createElement(FontAwesome[d.icon],{size:60,className:classes.icons})}
               </a>

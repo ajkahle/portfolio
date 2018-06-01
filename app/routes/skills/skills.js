@@ -32,9 +32,11 @@ import {MdWeb} from 'react-icons/lib/md'
 import classes from './skills.scss';
 
 //const colors = ['#0d47a1','#00c853','#ff4081','#fbc02d','#0d47a1','#00c853','#673ab7'];
-const cardWidthMd = 3;
-const cardWidthSm = 4;
-const cardWidthXs = 6;
+const cardWidthXl = 3;
+const cardWidthLg = 4;
+const cardWidthMd = 6;
+const cardWidthSm = 12;
+const cardWidthXs = 12;
 
 const colors = ['#0d47a1','#00c853','#0d47a1','#ff4081','#00c853','#0d47a1','#ff4081','#0d47a1']
 
@@ -146,12 +148,12 @@ class Skills extends React.Component {
         </div>
       </Drawer>
       <Grid container>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={12} lg={9}>
           <Typography variant="display2" color="primary">
           {content.heading1}
           </Typography>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={12} lg={9}>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="tags">Tags</InputLabel>
             <Select
@@ -188,7 +190,7 @@ class Skills extends React.Component {
               }
 
               return <Fade in={fade} timeout={{enter:2000,exit:2000}} key={i}>
-              <Grid item md={cardWidthMd} sm={cardWidthSm} xs={cardWidthXs} key={i} style={{display:hidden}} onClick={toggleDrawer(d,colors[i % colors.length])}>
+              <Grid item xl={cardWidthXl} lg={cardWidthLg} md={cardWidthMd} sm={cardWidthSm} xs={cardWidthXs} key={i} style={{display:hidden}} onClick={toggleDrawer(d,colors[i % colors.length])}>
                 <Card className={classes.card}>
                   <CardContent style={{backgroundColor:colors[i % colors.length]}}>
                     <Typography variant="title" className={classes.cardHeader}>

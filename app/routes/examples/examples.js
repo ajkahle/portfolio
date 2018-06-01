@@ -66,7 +66,7 @@ class Examples extends React.Component {
                 <Divider />
                 <CardActions>
                   <Grid container>
-                    <Grid item md={6}>
+                    <Grid item xs={6}>
                       <a href={d.github} target="_blank" className={classes.cardLinks} style={{color:colors[i]}}>
                         <FontAwesome.FaGithub size={40} className={classes.linkIcon} style={{color:colors[i]}}/>
                         <Typography variant="subheading" style={{color:colors[i]}}>
@@ -74,7 +74,7 @@ class Examples extends React.Component {
                         </Typography>
                       </a>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item xs={6}>
                       <a href={d.link} target="_blank" className={classes.cardLinks} style={{color:colors[i]}}>
                         <MdWeb size={40} className={classes.linkIcon} style={{color:colors[i]}}/>
                         <Typography variant="subheading" style={{color:colors[i]}}>
