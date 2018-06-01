@@ -2,14 +2,15 @@
 
 .link{
   color:white !important;
-  font-size: .8rem;
+  font-size: .7rem !important;
+  padding-right: .4rem !important;
+  padding-left: .4rem !important;
+  min-width: inherit !important;
 }
 
 .menuLinks{
   width:100%;
 }
-
-
 
 .settings{
   position:absolute !important;

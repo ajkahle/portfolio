@@ -35,13 +35,13 @@ class About extends React.Component {
     return (
       <Fade in={fade} timeout={fadeTime}>
         <Grid container>
-          <Grid item md={4}>
+          <Grid item md={4} xs={12}>
             <Typography variant="display2" color="primary" gutterBottom>
             {content.heading1}
             </Typography>
             <Avatar src={Profile} className={classes.avatar}/>
           </Grid>
-          <Grid item md={8}>
+          <Grid item md={8} xs={12}>
             <Typography variant="subheading" gutterBottom>
             {content.paragraph1}
             </Typography>
