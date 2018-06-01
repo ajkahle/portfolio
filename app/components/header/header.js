@@ -14,7 +14,6 @@ import { withFirestore, withFirebase } from 'react-redux-firebase';
 import { withRouter, Link } from 'react-router-dom'
 import classes from './header.scss'
 
-
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -50,7 +49,7 @@ class MenuAppBar extends React.Component {
         <Fade in={true} timeout={{enter:5000}}>
           <Toolbar>
               {pages.map(function(d,i){
-                return <Button component={Link} key={i} to={d.path} className={classes.link}>
+                return <Button component={Link} key={i} to={d.path} className={classes.link} target={d.target}>
                   {d.text}
                 </Button>
               })}
