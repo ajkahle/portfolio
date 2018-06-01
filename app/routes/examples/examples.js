@@ -23,6 +23,8 @@ import classes from './examples.scss';
 
 const colors = ['#0d47a1','#00c853','#ff4081','#fbc02d','#0d47a1','#00c853','#673ab7']
 //const colors = ['#0d47a1','#00c853','#0d47a1','#ff4081','#00c853','#0d47a1','#ff4081']
+const cardWidthMd = 3;
+const cardWidthXs = 12;
 
 class Examples extends React.Component {
   constructor(props){
@@ -50,7 +52,7 @@ class Examples extends React.Component {
         </Typography>
         <Grid container className={classes.gridContainer} spacing={40}>
           {content.cards.map(function(d,i){
-            return <Grid item md={d.width} key={i}>
+            return <Grid item md={cardWidthMd} xs={cardWidthXs} key={i}>
               <Card className={classes.card}>
                 <CardContent className={classes.cardContent} style={{backgroundColor:colors[i]}}>
                   {React.createElement(FontAwesome[d.icon],{size:60,className:classes.icons})}
