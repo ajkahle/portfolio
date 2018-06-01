@@ -26,6 +26,7 @@ class About extends React.Component {
       heading2:"",
       title:"",
       subheading:"",
+      details:[]
     },
     fade = false
     if(this.props.about){
@@ -42,18 +43,11 @@ class About extends React.Component {
             <Avatar src={Profile} className={classes.avatar}/>
           </Grid>
           <Grid item md={8} xs={12}>
-            <Typography variant="subheading" gutterBottom>
-            {content.paragraph1}
-            </Typography>
-            <Typography variant="subheading" gutterBottom>
-            {content.paragraph2}
-            </Typography>
-            <Typography variant="subheading" gutterBottom>
-            {content.paragraph3}
-            </Typography>
-            <Typography variant="subheading" gutterBottom>
-            {content.paragraph4}
-            </Typography>
+            {content.details.map(function(d,i){
+              return <Typography variant="subheading" gutterBottom key={i}>
+              {d}
+              </Typography>
+            })}
           </Grid>
         </Grid>
       </Fade>
